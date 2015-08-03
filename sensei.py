@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-## remember.py for Remember Hiragana in /home/laloge_h/Documents/Japonais
+## sensei.py for Sensei in /home/laloge_h/Documents/Japonais
 ##
 ## Made by Hugo Laloge
 ## Login   <laloge_h@epitech.net>
 ##
 ## Started on  Mon Aug  3 13:13:03 2015 Hugo Laloge
-## Last update Mon Aug  3 16:39:47 2015 Hugo Laloge
+## Last update Mon Aug  3 17:08:10 2015 Hugo Laloge
 ##
 
 import argparse
@@ -18,7 +18,7 @@ from parser import parser
 
 re_response_alpha = re.compile('\w{1,3}')
 
-class Teacher:
+class Sensei:
     def __init__(self, files):
         self.dictionary = []
         for file in files:
@@ -82,8 +82,8 @@ def arg_parse():
 
 if __name__ == '__main__':
     args = arg_parse()
-    teacher = Teacher(args.files)
+    sensei = Sensei(args.files)
     if (args.mode == 'exam'):
-        teacher.exam()
+        sensei.exam()
     else:
-        teacher.teach()
+        sensei.teach()
