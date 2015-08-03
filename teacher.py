@@ -5,15 +5,18 @@
 ## Login   <laloge_h@epitech.net>
 ##
 ## Started on  Mon Aug  3 13:13:03 2015 Hugo Laloge
-## Last update Mon Aug  3 16:32:08 2015 Hugo Laloge
+## Last update Mon Aug  3 16:39:47 2015 Hugo Laloge
 ##
 
 import argparse
 from os import system
 from random import randint
+import re
 import sys
 
 from parser import parser
+
+re_response_alpha = re.compile('\w{1,3}')
 
 class Teacher:
     def __init__(self, files):
@@ -47,7 +50,12 @@ class Teacher:
         print ('Finish !')
 
     def ask(self, equivalence):
-        response = input('What do %s mean ? : ' % (equivalence[1]))
+        good=False
+        while not good:
+            response = input('What do %s mean ? : ' % (equivalence[1]))
+            good = re.fullmatch(re_response_alpha, response)
+            if not good:
+                print ('Try again !')
         if (response == equivalence[0]):
             print ('Correct !')
             return True
