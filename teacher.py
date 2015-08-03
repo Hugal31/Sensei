@@ -5,12 +5,14 @@
 ## Login   <laloge_h@epitech.net>
 ##
 ## Started on  Mon Aug  3 13:13:03 2015 Hugo Laloge
-## Last update Mon Aug  3 15:19:13 2015 Hugo Laloge
+## Last update Mon Aug  3 16:08:05 2015 Hugo Laloge
 ##
 
+import argparse
 from os import system
-from sys import argv
 from random import randint
+import sys
+
 from parser import parser
 
 class Teacher:
@@ -27,7 +29,6 @@ class Teacher:
             if (self.ask(syllabe)):
                 score += 1
             self.dictionary.pop(index)
-        system('clear')
         print ('Score : %d/%d' % (score, rate))
         return score / rate
 
@@ -43,18 +44,24 @@ class Teacher:
                 self.dictionary.pop(index)
         print ('Finish !')
 
-    def ask(self, syllabe):
-        response = input('What do %s meen ? : ' % (syllabe[1]))
-        if (response == syllabe[0]):
+    def ask(self, equivalence):
+        response = input('What do %s mean ? : ' % (equivalence[1]))
+        if (response == equivalence[0]):
             print ('Correct !')
             return True
         else:
-            print('Incorrect, it was %s' % (syllabe[0]))
+            print ("Incorrect, it was '%s'" % (equivalence[0]))
             return False
 
+def arg_parse():
+    parser = argparse.ArgumentParser(description=
+                                     """Programme pour apprendre les kana et les kanji""")
+    parser.add_argument('file',
+                        type=argparse.FileType('r'),
+                        help='Le fichier dictionnaire')
+    return parser.parse_args()
+
 if __name__ == '__main__':
-    if (len(argv) > 1):
-        teacher = Teacher(argv[1])
-    else:
-        teacher = Teacher('ressources/hiragana.txt')
+    args = arg_parse()
+    teacher = Teacher(args.file)
     teacher.exam()
