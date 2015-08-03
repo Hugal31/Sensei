@@ -5,7 +5,7 @@
 ## Login   <laloge_h@epitech.net>
 ##
 ## Started on  Mon Aug  3 13:13:03 2015 Hugo Laloge
-## Last update Mon Aug  3 17:08:10 2015 Hugo Laloge
+## Last update Mon Aug  3 22:04:32 2015 Hugo Laloge
 ##
 
 import argparse
@@ -13,10 +13,17 @@ from os import system
 from random import randint
 import re
 import sys
+from time import time
 
 from parser import parser
 
 re_response_alpha = re.compile('\w{1,3}')
+
+def print_score(score, rate, start_time):
+    print ('Score : %d/%d'  % (score, rate))
+    print ('Ratio : %0.2f' % (score / rate))
+    print ('Time : %dm%ds' % (int((time() - start_time) / 60), (time() - start_time) % 60))
+    print ('Time / character : %.1fs' % ((time() - start_time) / rate))
 
 class Sensei:
     def __init__(self, files):
@@ -28,13 +35,14 @@ class Sensei:
     def exam(self):
         score = 0
         rate = len(self.dictionary)
+        start_time=time()
         while len(self.dictionary) != 0:
             index = randint(0, len(self.dictionary) - 1)
             equivalence = self.dictionary[index]
             if (self.ask(equivalence)):
                 score += 1
             self.dictionary.pop(index)
-        print ('Score : %d/%d' % (score, rate))
+        print_score(score, rate, start_time)
         return score / rate
 
     # Demande chaque kana jusqu'a que on ai donné la bonne réponse à tous
@@ -45,9 +53,11 @@ class Sensei:
             index = randint(0, len(self.dictionary) - 1)
             equivalence = self.dictionary[index]
             if (self.ask(equivalence)):
-                score += 1
                 self.dictionary.pop(index)
+            else:
+                score -= 1
         print ('Finish !')
+        print ('You made %d errors' % (score))
 
     def ask(self, equivalence):
         good=False
