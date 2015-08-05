@@ -5,7 +5,7 @@
 ## Login   <laloge_h@epitech.net>
 ##
 ## Started on  Mon Aug  3 13:13:03 2015 Hugo Laloge
-## Last update Mon Aug  3 22:04:32 2015 Hugo Laloge
+## Last update Tue Aug  4 11:12:54 2015 Hugo Laloge
 ##
 
 import argparse
@@ -73,13 +73,20 @@ class Sensei:
             print ("Incorrect, it was '%s'" % (equivalence[0]))
             return False
 
+    def response(self):
+        char = input('Which one ? : ')
+        for equivalence in self.dictionary:
+            if char == equivalence[0]:
+                print ('-> ', equivalence[1])
+                return equivalence[1]
+
 def arg_parse():
     parser = argparse.ArgumentParser(description=
                                      """Programme pour apprendre les kana et les kanji""")
 
     parser.add_argument('--mode',
                         default='exam',
-                        choices=['exam', 'teach'],
+                        choices=['exam', 'teach', 'question'],
                         type=str,
                         help='Mode d\'enseignement')
 
@@ -93,7 +100,9 @@ def arg_parse():
 if __name__ == '__main__':
     args = arg_parse()
     sensei = Sensei(args.files)
-    if (args.mode == 'exam'):
+    if args.mode == 'exam':
         sensei.exam()
-    else:
+    elif args.mode == 'teach':
         sensei.teach()
+    else:
+        sensei.response()
