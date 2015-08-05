@@ -5,13 +5,13 @@
 ## Login   <laloge_h@epitech.net>
 ##
 ## Started on  Mon Aug  3 14:50:36 2015 Hugo Laloge
-## Last update Mon Aug  3 15:46:01 2015 Hugo Laloge
+## Last update Wed Aug  5 09:12:47 2015 Hugo Laloge
 ##
 
 import re
 
 re_comment = re.compile('\s*#')
-re_data = re.compile('(\S+):(\S+)')
+re_data = re.compile('(.+):(.+)')
 
 # Parse un fichier avec des equivalences x:y
 def parser(fd):
@@ -21,5 +21,8 @@ def parser(fd):
         if re.match(re_comment, line):
             None
         elif re.search(re_data, line):
-            data.append(re.findall(re_data, line)[0])
+            equivalence = ['', '']
+            equivalence[0] = re.findall(re_data, line)[0][0].split('|')
+            equivalence[1] = re.findall(re_data, line)[0][1].split('|')
+            data.append(equivalence)
     return data

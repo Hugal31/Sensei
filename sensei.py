@@ -5,7 +5,7 @@
 ## Login   <laloge_h@epitech.net>
 ##
 ## Started on  Mon Aug  3 13:13:03 2015 Hugo Laloge
-## Last update Tue Aug  4 11:12:54 2015 Hugo Laloge
+## Last update Wed Aug  5 14:24:20 2015 Hugo Laloge
 ##
 
 import argparse
@@ -17,7 +17,7 @@ from time import time
 
 from parser import parser
 
-re_response_alpha = re.compile('\w{1,3}')
+re_response_alpha = re.compile('\S.*')
 
 def print_score(score, rate, start_time):
     print ('Score : %d/%d'  % (score, rate))
@@ -62,22 +62,22 @@ class Sensei:
     def ask(self, equivalence):
         good=False
         while not good:
-            response = input('What do %s mean ? : ' % (equivalence[1]))
+            response = input('What do %s mean ? : ' % ('|'.join(equivalence[1])))
             good = re.fullmatch(re_response_alpha, response)
             if not good:
                 print ('Try again !')
-        if (response == equivalence[0]):
+        if (response in equivalence[0]):
             print ('Correct !')
             return True
         else:
-            print ("Incorrect, it was '%s'" % (equivalence[0]))
+            print ("Incorrect, it was '%s'" % ('|'.join(equivalence[0])))
             return False
 
     def response(self):
         char = input('Which one ? : ')
         for equivalence in self.dictionary:
-            if char == equivalence[0]:
-                print ('-> ', equivalence[1])
+            if char in equivalence[0]:
+                print ('->', '|'.join(equivalence[1]))
                 return equivalence[1]
 
 def arg_parse():
